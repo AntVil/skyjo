@@ -52,7 +52,7 @@ class Game{
             for(let j=0;j<this.playerGridRows*this.playerGridColumns;j++){
                 let playerCardElement = document.createElement("img");
                 playerCardElement.id = `${i}_${j}`;
-                playerCardElement.onclick = function(){
+                playerCardElement.onmousedown = function(){
                     let [playerId, cardId] = this.id.split("_");
                     playerId = parseInt(playerId);
                     cardId = parseInt(cardId);
@@ -210,11 +210,11 @@ class Game{
         topCardElement.src = `./images/${topCard.getCardValue()}.svg`;
         if(this.viewCardSelected){
             topCardElement.style.filter = "brightness(120%)";
-            topCardElement.style.border = "3px solid #AAAAAA";
+            topCardElement.style.borderColor = "#AAAAAA";
             topCardElement.style.backgroundColor = "#AAAAAA";
         }else{
             topCardElement.style.filter = "brightness(100%)";
-            topCardElement.style.border = "3px solid transparent";
+            topCardElement.style.borderColor = "transparent";
             topCardElement.style.backgroundColor = "transparent";
         }
         
@@ -230,11 +230,11 @@ class Game{
                     }
                 }
             }
-            document.getElementById(`player${i}`).style.border = "3px solid transparent";
+            document.getElementById(`player${i}`).style.borderColor = "transparent";
             document.getElementById(`player${i}`).style.backgroundColor = "transparent";
         }
 
-        document.getElementById(`player${this.currentPlayer}`).style.border = "3px solid #AAAAAA";
+        document.getElementById(`player${this.currentPlayer}`).style.borderColor = "#AAAAAA";
         document.getElementById(`player${this.currentPlayer}`).style.backgroundColor = "#AAAAAA";
 
         let cardValue = this.cardDeck.viewTopCard().getCardValue();

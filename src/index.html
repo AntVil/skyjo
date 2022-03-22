@@ -12,11 +12,11 @@
     <body>
         <header>
             <div>
-                <button onclick="game.startGame(2);">2</button>
-                <button onclick="game.startGame(3);">3</button>
-                <button onclick="game.startGame(4);">4</button>
-                <button onclick="game.startGame(5);">5</button>
-                <button onclick="game.startGame(6);">6</button>
+                <button onmousedown="game.startGame(2);">2</button>
+                <button onmousedown="game.startGame(3);">3</button>
+                <button onmousedown="game.startGame(4);">4</button>
+                <button onmousedown="game.startGame(5);">5</button>
+                <button onmousedown="game.startGame(6);">6</button>
             </div>
         </header>
 
@@ -24,8 +24,8 @@
             <div id="players"></div>
             <div id="cardDeckBackground"></div>
             <div id="cardDeck">
-                <img src="./images/hidden.svg" onclick="game.newTopCard()" />
-                <img id="topCard" src="./images/hidden.svg" onclick="game.topCardClick()" />
+                <img src="./images/hidden.svg" onmousedown="game.newTopCard()" />
+                <img id="topCard" src="./images/hidden.svg" onmousedown="game.topCardClick()" />
             </div>
         </main>
     </body>
