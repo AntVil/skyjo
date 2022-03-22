@@ -1,0 +1,110 @@
+:root{
+    --themeColor1: #222222;
+    --themeColor2: #333333;
+    --width: min(100vw, 100vh);
+    --height: min(100vw, 100vh);
+}
+
+*{
+    transition: all 0.5s;
+    user-select: none;
+}
+
+body{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: var(--themeColor1);
+}
+
+header{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor2);
+    z-index: 1;
+}
+
+header>div{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(0.1 * var(--width));
+}
+
+header>div>button{
+    width: calc(0.15 * var(--width));
+    height: calc(0.15 * var(--width));
+    font-size: calc(0.1 * var(--width));
+}
+
+main{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor2);
+    border-radius: 50%;
+}
+
+#players{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    transform: translate(-50%, -50%);
+}
+
+#players>*{
+    background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: calc(0.005 * var(--width));
+    font-size: calc(0.1 * var(--width));
+    color: #FFFFFFAA;
+}
+
+#players>*>img{
+    width: calc(0.054 * var(--width));
+    height: calc(0.096 * var(--width));
+}
+
+#cardDeck{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#cardDeckBackground{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: calc(0.3 * var(--width));
+    height: calc(0.3 * var(--height));
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor1);
+    border-radius: 50%; 
+}
+
+#cardDeck>*{
+    width: calc(0.108 * var(--width));
+    height: calc(0.192 * var(--width));
+    background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: calc(0.005 * var(--width));
+}
