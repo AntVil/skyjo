@@ -72,7 +72,7 @@ class Game{
             let playerTotalScore = document.createElement("div");
             playerTotalScore.id = `playerTotalScore${i}`;
             playerTotalScore.innerText = 0;
-            playerTotalScore.style.color = "#FFFFFF";
+            playerTotalScore.style.color = "#FFFF00";
             this.footerElement.appendChild(playerTotalScore);
         }
 
