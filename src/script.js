@@ -373,12 +373,14 @@ class CardDeck{
     }
 
     getTopCard(reveal){
+        let card = this.cards.shift();
+
         if(this.cards.length === 0){
             this.cards = this.recycledCards;
             this.recycledCards = [];
             this.shuffle();
         }
-        let card = this.cards.shift();
+        
         if(reveal){
             this.cards[0].unhide();
         }

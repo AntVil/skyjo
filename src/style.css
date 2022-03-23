@@ -29,6 +29,8 @@ header{
     background-color: var(--themeColor2);
     z-index: 1;
     border-radius: calc(0.005 * var(--width));
+    text-align: center;
+    color: #FFFFFF;
 }
 
 header>div{
@@ -156,4 +158,21 @@ footer>*{
 
 #footerToogle:checked~footer{
     top: 50%;
+}
+
+#reloadButton{
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: calc(0.075 * var(--width));
+    height: calc(0.075 * var(--width));
+    margin: calc(0.025 * var(--width));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(0.05 * var(--width));
+    color: #FFFFFFAA;
+    background-color: var(--themeColor2);
+    border-radius: calc(0.005 * var(--width));
+    border: none;
 }
