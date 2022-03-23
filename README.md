@@ -3,7 +3,7 @@
 a web-app implementation of the game skyjo
 
 ### ios-app-like
-[ios app-like](https://antvil/github.io/skyjo/iosApp.html)
+[ios app-like](https://antvil.github.io/skyjo/iosApp.html)
 
 *caution do not install unknown software without knowning the risks*
 
