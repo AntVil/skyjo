@@ -4,7 +4,7 @@
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <title>skyjo</title>
-        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui'>
+        <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no'>
         
         <link rel="stylesheet" href="./style.css">
         <script src="./script.js"></script>
@@ -28,5 +28,11 @@
                 <img id="topCard" src="./images/hidden.svg" onmousedown="game.topCardClick()" />
             </div>
         </main>
+
+        <label id="footerToogleLabel" for="footerToogle" onmousedown="game.nextRound();">&bigtriangledown;</label>
+        <input id="footerToogle" type="checkbox" />
+        <footer>
+            
+        </footer>
     </body>
 </html>

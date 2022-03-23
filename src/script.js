@@ -2,7 +2,6 @@
 let game;
 
 window.onload = function(){
-    window.scrollTo(0, 1);
     game = new Game();
 }
 
@@ -20,17 +19,22 @@ class Game{
         this.playerGridColumns = 4;
         this.headerElement = document.getElementsByTagName("header")[0];
         this.mainElement = document.getElementsByTagName("main")[0];
+        this.footerElement = document.getElementsByTagName("footer")[0];
         this.playersElement = document.getElementById("players");
         this.currentPlayer = 0;
         this.viewCardSelected = false;
         this.redrawPossible = true;
         
         this.gameState = "";
+
+        this.firstGame = true;
     }
 
     startGame(playersAmount){
         this.cardDeck = new CardDeck();
         this.cardDeck.shuffle();
+
+        this.footerElement.style.gridTemplateColumns = `repeat(${playersAmount}, 1fr)`;
 
         this.players = [];
         for(let i=0;i<playersAmount;i++){
@@ -43,9 +47,9 @@ class Game{
             let playerElement = document.createElement("div");
             playerElement.id = `player${i}`;
             playerElement.style.position = "absolute";
-            playerElement.style.top = `${50 + 33 * Math.cos(2 * Math.PI * i / playersAmount)}%`;
-            playerElement.style.left = `${50 + 33 * Math.sin(2 * Math.PI * i / playersAmount)}%`;
-            playerElement.style.transform = `translate(-50%, -50%) rotate(-${360 * i / playersAmount}deg)`;
+            playerElement.style.top = `${50 + 33 * Math.cos(-2 * Math.PI * i / playersAmount)}%`;
+            playerElement.style.left = `${50 + 33 * Math.sin(-2 * Math.PI * i / playersAmount)}%`;
+            playerElement.style.transform = `translate(-50%, -50%) rotate(${360 * i / playersAmount}deg)`;
             playerElement.style.display = "grid";
             playerElement.style.gridTemplateColumns = `repeat(${this.playerGridColumns}, 1fr)`;
             playerElement.style.gridTemplateRows = `repeat(${this.playerGridRows}, 1fr)`;
@@ -64,6 +68,12 @@ class Game{
                 playerElement.appendChild(playerCardElement);
             }
             this.playersElement.appendChild(playerElement);
+
+            let playerTotalScore = document.createElement("div");
+            playerTotalScore.id = `playerTotalScore${i}`;
+            playerTotalScore.innerText = 0;
+            playerTotalScore.style.color = "#FFFFFF";
+            this.footerElement.appendChild(playerTotalScore);
         }
 
         this.headerElement.style.opacity = 0;
@@ -71,26 +81,35 @@ class Game{
 
         this.currentPlayer = 0;
         
+        this.firstGame = true;
         this.gameState = "firstRound";
         this.renderCards();
     }
 
     nextPlayer(){
-        this.currentPlayer = (this.currentPlayer + this.players.length - 1) % this.players.length;
+        if(this.gameState === "done"){
+            return;
+        }
+
+        this.currentPlayer = (this.currentPlayer + 1) % this.players.length;
         this.redrawPossible = true;
 
         if(this.gameState === "firstRound" && this.players[this.currentPlayer].getOpenCardCount() >= 2){
             this.gameState = "midRound";
-            let bestScore = this.players[0].getOpenCardScore();
-            let bestPlayer = 0;
-            for(let i=1;i<this.players.length;i++){
-                let score = this.players[i].getOpenCardScore();
-                if(score < bestScore){
-                    bestPlayer = i;
-                    bestScore = score;
+
+            if(this.firstGame){
+                let bestScore = this.players[0].getOpenCardScore();
+                let bestPlayer = 0;
+                for(let i=1;i<this.players.length;i++){
+                    let score = this.players[i].getOpenCardScore();
+                    if(score < bestScore){
+                        bestPlayer = i;
+                        bestScore = score;
+                    }
                 }
+                this.currentPlayer = bestPlayer;
             }
-            this.currentPlayer = bestPlayer;
+
             this.cardDeck.viewTopCard().unhide();
         }
 
@@ -121,15 +140,72 @@ class Game{
             if(this.currentPlayer !== bestPlayer){
                 document.getElementById(`playerscore${this.currentPlayer}`).innerText *= 2;
             }
-            this.currentPlayer = bestPlayer;
-            this.gameState = "finished";
+
+            let gameFinished = false;
+            for(let i=0;i<this.players.length;i++){
+                let scoreElement = document.createElement("div");
+                scoreElement.innerText = document.getElementById(`playerscore${i}`).innerText;
+                this.footerElement.appendChild(scoreElement);
+
+                let playerTotalScoreElement = document.getElementById(`playerTotalScore${i}`);
+                let currentTotalScore = parseInt(playerTotalScoreElement.innerText);
+                currentTotalScore += parseInt(document.getElementById(`playerscore${i}`).innerText);
+                playerTotalScoreElement.innerText = currentTotalScore;
+                if(currentTotalScore > 100){
+                    gameFinished = true;
+                }
+            }
+            
+            if(!gameFinished){
+                this.currentPlayer = bestPlayer;
+                this.gameState = "roundFinished";
+            }else{
+                let bestScore = Infinity;
+                for(let i=0;i<this.players.length;i++){
+                    let score = parseInt(document.getElementById(`playerTotalScore${i}`));
+                    if(score < bestScore){
+                        bestScore = score;
+                        this.currentPlayer = i;
+                    }
+                }
+                this.gameState = "done";
+            }
+            
+            document.getElementById("footerToogle").checked = true;
         }
 
         this.renderCards();
     }
 
+    nextRound(){
+        if(document.getElementById("footerToogle").checked && this.gameState === "roundFinished"){
+            this.firstGame = false;
+            for(let i=0;i<this.players.length;i++){
+                let cards = this.players[i].getAllCards();
+                for(let j=0;j<cards.length;j++){
+                    this.cardDeck.recycleCard(cards[j]);
+                }
+
+                document.getElementById(`playerscore${i}`).remove();
+            }
+
+            this.cardDeck.shuffle();
+
+            for(let i=0;i<this.players.length;i++){
+                let cards = [];
+                for(let j=0;j<this.playerGridRows*this.playerGridColumns;j++){
+                    cards.push(this.cardDeck.getTopCard(false));
+                }
+                this.players[i].giveCards(cards);
+            }
+
+            this.gameState = "firstRound";
+            this.renderCards();
+        }
+    }
+
     newTopCard(){
-        if(this.gameState === "finished"){
+        if(this.gameState === "roundFinished" || this.gameState === "done"){
             return;
         }
 
@@ -137,6 +213,15 @@ class Game{
             if(this.redrawPossible){
                 this.cardDeck.recycleCard(this.cardDeck.getTopCard(true));
                 this.redrawPossible = false;
+                document.getElementById("topCard").animate(
+                    [
+                        { borderColor: "#FFFFFF", backgroundColor: "#FFFFFF" },
+                        { borderColor: "transparent", backgroundColor: "transparent" }
+                    ], {
+                        duration: 500,
+                        iterations: 1
+                    }
+                );
             }
         }
         
@@ -144,7 +229,7 @@ class Game{
     }
 
     topCardClick(){
-        if(this.gameState === "finished"){
+        if(this.gameState === "roundFinished" || this.gameState === "done"){
             return;
         }
         
@@ -159,7 +244,7 @@ class Game{
     }
 
     cardClick(playerId, cardId){
-        if(this.gameState === "finished"){
+        if(this.gameState === "roundFinished" || this.gameState === "done"){
             return;
         }
 
@@ -276,6 +361,10 @@ class CardDeck{
 
     shuffle(){
         for(let i=0;i<this.cards.length;i++){
+            this.cards[i].hide();
+        }
+
+        for(let i=0;i<this.cards.length;i++){
             let randomIndex = Math.floor(Math.random() * this.cards.length);
             let temp = this.cards[i];
             this.cards[i] = this.cards[randomIndex]
@@ -324,6 +413,7 @@ class Player{
             }
             this.cardGrid.push(row);
         }
+        this.totalScore = 0;
     }
 
     flipCard(cardRow, cardColumn){
@@ -398,6 +488,36 @@ class Player{
         }
         return removed;
     }
+
+    getAllCards(){
+        let removed = [];
+        for(let x=0;x<this.cols;x++){
+            for(let y=0;y<this.rows;y++){
+                let cardValue = this.cardGrid[y][x].getCardValue();
+                if(isTrueNaN(cardValue)){
+                    continue
+                }else{
+                    removed.push(this.cardGrid[y][x]);
+                    this.cardGrid[y][x] = new Card(NaN, false);
+                }
+            }
+        }
+        return removed;
+    }
+
+    giveCards(cards){
+        for(let x=0;x<this.cols;x++){
+            for(let y=0;y<this.rows;y++){
+                let cardValue = this.cardGrid[y][x].getCardValue();
+                if(!isTrueNaN(cardValue)){
+                    console.log("ohno");
+                    console.log(cardValue);
+                }else{
+                    this.cardGrid[y][x] = cards[this.cols * y + x];
+                }
+            }
+        }
+    }
 }
 
 
@@ -413,6 +533,10 @@ class Card{
 
     unhide(){
         this.hidden = false;
+    }
+
+    hide(){
+        this.hidden = true;
     }
 
     getCardValue(){
