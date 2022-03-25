@@ -8,17 +8,26 @@
         
         <link rel="icon" href="./images/icon.svg">
         <link rel="stylesheet" href="./style.css">
-        <script src="./script.js"></script>
+
+        <script src="./scripts/main.js"></script>
+        <script src="./scripts/Game.js"></script>
+        <script src="./scripts/ScreenHandler.js"></script>
+        <script src="./scripts/GameRound.js"></script>
+        <script src="./scripts/Player.js"></script>
+        <script src="./scripts/Card.js"></script>
+        <script src="./scripts/CardGrid.js"></script>
+        <script src="./scripts/CardDeck.js"></script>
     </head>
     <body>
         <header>
             <h3>Players</h3>
             <div>
-                <button onmousedown="game.startGame(2);">2</button>
-                <button onmousedown="game.startGame(3);">3</button>
-                <button onmousedown="game.startGame(4);">4</button>
-                <button onmousedown="game.startGame(5);">5</button>
-                <button onmousedown="game.startGame(6);">6</button>
+                <button onmousedown="game.startGame(1, 1);">1</button>
+                <button onmousedown="game.startGame(2, 0);">2</button>
+                <button onmousedown="game.startGame(3, 0);">3</button>
+                <button onmousedown="game.startGame(4, 0);">4</button>
+                <button onmousedown="game.startGame(5, 0);">5</button>
+                <button onmousedown="game.startGame(6, 0);">6</button>
             </div>
         </header>
 
@@ -26,7 +35,7 @@
             <div id="players"></div>
             <div id="cardDeckBackground"></div>
             <div id="cardDeck">
-                <img src="./images/hidden.svg" onmousedown="game.newTopCard()" />
+                <img id="newTopCard" src="./images/hidden.svg" onmousedown="game.newTopCard()" />
                 <img id="topCard" src="./images/hidden.svg" onmousedown="game.topCardClick()" />
             </div>
         </main>
