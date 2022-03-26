@@ -129,6 +129,8 @@ class GameRound{
             this.state = "finished";
             this.game.roundFinished();
         }
+
+        this.game.players[this.currentPlayer].play();
     }
 
     isFinished(){

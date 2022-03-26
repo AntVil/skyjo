@@ -18,8 +18,10 @@ class CardGrid{
         let cards = [];
         for(let y=0;y<PLAYER_GRID_ROWS;y++){
             for(let x=0;x<PLAYER_GRID_COLUMNS;x++){
-                cards.push(this.grid[y][x]);
-                this.grid[y][x] = new Card(NaN, false);
+                if(!this.grid[y][x].isEmpty()){
+                    cards.push(this.grid[y][x]);
+                    this.grid[y][x] = new Card(NaN, false);
+                }
             }
         }
         return cards;
@@ -52,8 +54,10 @@ class CardGrid{
     retrieveColumn(x){
         let cards = [];
         for(let y=0;y<PLAYER_GRID_ROWS;y++){
-            cards.push(this.grid[y][x]);
-            this.grid[y][x] = new Card(NaN, false);
+            if(!this.grid[y][x].isEmpty()){
+                cards.push(this.grid[y][x]);
+                this.grid[y][x] = new Card(NaN, false);
+            }
         }
         return cards;
     }

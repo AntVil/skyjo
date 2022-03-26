@@ -25,10 +25,12 @@ class Game{
             cardGrid.giveCards(cards);
             this.cardGrids.push(cardGrid);
 
-            this.players.push(new Player());
+            this.players.push(new Player(this, i, i >= playerCount));
         }
 
         this.screenHandler.setupGameScreen(totalPlayerCount);
+
+        this.players[this.round.currentPlayer].play();
     }
 
     newTopCard(){
@@ -102,6 +104,8 @@ class Game{
             
             this.screenHandler.hideScores();
             this.screenHandler.render();
+
+            this.players[this.round.currentPlayer].play();
         }
     }
 }
