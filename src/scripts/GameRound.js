@@ -38,10 +38,14 @@ class GameRound{
                     card = this.game.cardDeck.swapTopCard(card);
                     this.game.cardGrids[playerId].swapCard(card, y, x);
                     turnDone = true;
+                    this.game.screenHandler.highlight(playerId, y, x);
+                    this.game.screenHandler.render();
                 }else{
                     if(card.isHidden()){
                         card.reveal();
                         turnDone = true;
+                        this.game.screenHandler.highlight(playerId, y, x);
+                        this.game.screenHandler.render();
                     }
                 }
 
@@ -55,6 +59,7 @@ class GameRound{
         if(this.state === "firstTurn"){
             if(this.game.cardGrids[this.currentPlayer].getRevealedCardCount() >= MINIMUM_OPENED_CARDS){
                 this.nextPlayer();
+                this.game.screenHandler.render();
             }
         }else{
             if(turnDone){
@@ -62,10 +67,9 @@ class GameRound{
                     this.game.cardGrids[this.currentPlayer].revealCards();
                 }
                 this.nextPlayer();
+                this.game.screenHandler.render();
             }
         }
-
-        this.game.screenHandler.render();
     }
 
     getScores(){
@@ -129,6 +133,8 @@ class GameRound{
             this.state = "finished";
             this.game.roundFinished();
         }
+
+        this.game.screenHandler.render();
 
         this.game.players[this.currentPlayer].play();
     }

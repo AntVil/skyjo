@@ -14,13 +14,17 @@ class Player{
         return this.totalScore;
     }
 
-    play(){
+    async play(){
         if(this.bot){
             let cardGrid = this.game.cardGrids[this.player];
             if(cardGrid.getRevealedCardCount() < MINIMUM_OPENED_CARDS){
                 for(let x=0;x<PLAYER_GRID_COLUMNS;x++){
                     for(let y=0;y<PLAYER_GRID_ROWS;y++){
-                        this.clickOn(y, x);
+                        if(cardGrid.getRevealedCardCount() < MINIMUM_OPENED_CARDS){
+                            await this.clickOn(y, x);
+                        }else{
+                            return;
+                        }
                     }
                 }
             }else{
@@ -32,10 +36,10 @@ class Player{
                         sum += cardGrid.getCard(y, x).getCardValue() === topCardValue;
                     }
                     if(sum === PLAYER_GRID_ROWS-1){
-                        this.selectTopCard();
+                        await this.selectTopCard();
                         for(let y=0;y<PLAYER_GRID_ROWS;y++){
                             if(cardGrid.getCard(y, x).getCardValue() !== topCardValue){
-                                this.clickOn(y, x);
+                                await this.clickOn(y, x);
                                 return;
                             }
                         }
@@ -43,7 +47,7 @@ class Player{
                 }
                 
                 if(topCardValue > 4){
-                    this.newTopCard();
+                    await this.newTopCard();
                     topCardValue = this.game.cardDeck.getTopCard().getCardValue();
                 }
 
@@ -53,10 +57,10 @@ class Player{
                         sum += cardGrid.getCard(y, x).getCardValue() === topCardValue;
                     }
                     if(sum === PLAYER_GRID_ROWS-1){
-                        this.selectTopCard();
+                        await this.selectTopCard();
                         for(let y=0;y<PLAYER_GRID_ROWS;y++){
                             if(cardGrid.getCard(y, x).getCardValue() !== topCardValue){
-                                this.clickOn(y, x);
+                                await this.clickOn(y, x);
                                 return;
                             }
                         }
@@ -65,7 +69,7 @@ class Player{
                 
                 if(cardGrid.getRevealedCardCount() < PLAYER_GRID_ROWS * PLAYER_GRID_COLUMNS - 1){
                     if(topCardValue < 5){
-                        this.selectTopCard();
+                        await this.selectTopCard();
                     }
 
                     for(let x=0;x<PLAYER_GRID_COLUMNS;x++){
@@ -82,7 +86,10 @@ class Player{
                             let isGoodImprovement = cardGrid.getCard(y, x).getCardValue() - topCardValue > 2;
                             let isFine = cardGrid.getCard(y, x).getCardValue() < 3;
                             if(isHidden || (isGoodImprovement && !isFine)){
-                                this.clickOn(y, x);
+                                await this.clickOn(y, x);
+                                if(this.game.round.currentPlayer !== this.player){
+                                    return;
+                                }
                             }
                         }
                     }
@@ -97,14 +104,15 @@ class Player{
                     }
 
                     if(biggest < 5 && topCardValue < 5){
-                        this.selectTopCard();
-                        this.clickOn(PLAYER_GRID_ROWS-1, PLAYER_GRID_COLUMNS-1);
+                        await this.selectTopCard();
+                        await this.clickOn(PLAYER_GRID_ROWS-1, PLAYER_GRID_COLUMNS-1);
                     }else{
-                        this.selectTopCard();
+                        await this.selectTopCard();
                         for(let x=0;x<PLAYER_GRID_COLUMNS;x++){
                             for(let y=0;y<PLAYER_GRID_ROWS;y++){
                                 if(cardGrid.getCard(y, x).getCardValue() === biggest){
-                                    this.clickOn(y, x);
+                                    await this.clickOn(y, x);
+                                    return;
                                 }
                             }
                         }
@@ -114,15 +122,18 @@ class Player{
         }
     }
 
-    clickOn(y, x){
+    async clickOn(y, x){
+        await sleep(COMPUTER_MS_DELAY);
         document.getElementById(`player_${this.player}_card_${y}_${x}`).dispatchEvent(new Event("mousedown"));
     }
 
-    selectTopCard(){
+    async selectTopCard(){
+        await sleep(COMPUTER_MS_DELAY);
         document.getElementById("topCard").dispatchEvent(new Event("mousedown"));
     }
 
-    newTopCard(){
+    async newTopCard(){
+        await sleep(COMPUTER_MS_DELAY);
         document.getElementById("newTopCard").dispatchEvent(new Event("mousedown"));
     }
 }

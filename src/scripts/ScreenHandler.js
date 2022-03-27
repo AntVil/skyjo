@@ -110,6 +110,18 @@ class ScreenHandler{
         );
     }
 
+    highlight(player, y, x){
+        let element = document.getElementById(`player_${player}_card_${y}_${x}`).animate(
+            [
+                { filter: "brightness(30%)" },
+                { filter: "brightness(100%)" }
+            ], {
+                duration: 500,
+                iterations: 1
+            }
+        );
+    }
+
     revealScores(scores, totalScores){
         for(let i=0;i<scores.length;i++){
             let totalScoreElement = document.getElementById(`player_${i}_totalScore`);

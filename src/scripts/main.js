@@ -21,8 +21,13 @@ const CARD_OCCURRENCES = {
 };
 const MINIMUM_OPENED_CARDS = 2;
 const LOSING_SCORE = 100;
+const COMPUTER_MS_DELAY = 750;
 
 
 window.onload = function(){
     game = new Game();
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
