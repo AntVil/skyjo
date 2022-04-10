@@ -50,8 +50,11 @@ class GameRound{
                 }
 
                 let retrievedCards = this.game.cardGrids[playerId].retrieveCompletedCards();
-                for(let i=0;i<retrievedCards.length;i++){
-                    this.game.cardDeck.recycleCard(retrievedCards[i]);
+                if(retrievedCards.length > 0){
+                    retrievedCards[0] = this.game.cardDeck.swapTopCard(retrievedCards[0]);
+                    for(let i=0;i<retrievedCards.length;i++){
+                        this.game.cardDeck.recycleCard(retrievedCards[i]);
+                    }
                 }
             }
         }
@@ -83,7 +86,8 @@ class GameRound{
                 bestPlayer = i;
             }
         }
-        if(bestPlayer !== this.currentPlayer){
+        
+        if(bestScore >= scores[this.currentPlayer] && scores[this.currentPlayer] >= 0){
             scores[this.currentPlayer] *= 2;
         }
         return scores;
@@ -114,12 +118,12 @@ class GameRound{
                 this.state = "midTurn";
 
                 if(this.firstRound){
-                    let bestScore = Infinity;
+                    let worstScore = -Infinity;
                     let cardGrids = this.game.cardGrids;
                     for(let i=0;i<cardGrids.length;i++){
                         let score = cardGrids[i].getCurrentScore();
-                        if(bestScore > score){
-                            bestScore = score;
+                        if(worstScore < score){
+                            worstScore = score;
                             this.currentPlayer = i;
                         }
                     }

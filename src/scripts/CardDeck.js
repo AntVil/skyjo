@@ -35,6 +35,7 @@ class CardDeck{
         
         if(this.cards.length === 0){
             this.cards = this.recycledCards;
+            this.recycledCards = [];
             this.shuffle();
         }
 

@@ -83,9 +83,9 @@ class Game{
                 }
             }
 
-            let winner = this.round.getWinner();
+            let finishedPlayer = this.round.currentPlayer;
             this.round = new GameRound(this, false);
-            this.round.setCurrentPlayer(winner);
+            this.round.setCurrentPlayer(finishedPlayer);
 
             for(let cardGrid of this.cardGrids){
                 let cards = cardGrid.retrieveCards();
