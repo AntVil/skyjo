@@ -87,9 +87,26 @@ class GameRound{
             }
         }
         
-        if(bestScore <= scores[this.currentPlayer] && scores[this.currentPlayer] >= 0){
-            scores[this.currentPlayer] *= 2;
+        if(scores[this.currentPlayer] > 0){
+            if(bestScore < scores[this.currentPlayer]){
+                scores[this.currentPlayer] *= 2;
+            }else{
+                let scoreCounts = {};
+                for(let score of scores){
+                    let scoreKey = "" + score;
+                    if(Object.keys(scoreCounts).includes(scoreKey)){
+                        scoreCounts[scoreKey] += 1;
+                    }else{
+                        scoreCounts[scoreKey] = 1;
+                    }
+                }
+                if(scoreCounts["" + bestScore] > 1){
+                    scores[this.currentPlayer] *= 2;
+                }
+            }
+
         }
+        
         return scores;
     }
 
