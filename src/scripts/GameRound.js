@@ -87,7 +87,7 @@ class GameRound{
             }
         }
         
-        if(bestScore >= scores[this.currentPlayer] && scores[this.currentPlayer] >= 0){
+        if(bestScore <= scores[this.currentPlayer] && scores[this.currentPlayer] >= 0){
             scores[this.currentPlayer] *= 2;
         }
         return scores;
