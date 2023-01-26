@@ -1,0 +1,184 @@
+:root{
+    --themeColor1: #222222;
+    --themeColor2: #333333;
+    --width: min(95vw, 95vh);
+    --height: min(95vw, 95vh);
+}
+
+*{
+    transition: all 0.5s;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    overflow: hidden;
+}
+
+input[type="checkbox"]{
+    display: none;
+}
+
+body{
+    background-color: var(--themeColor1);
+}
+
+header{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor2);
+    z-index: 1;
+    border-radius: calc(0.005 * var(--width));
+    text-align: center;
+    color: #FFFFFF;
+}
+
+header>div{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(0.1 * var(--width));
+}
+
+header>div>button{
+    width: calc(0.15 * var(--width));
+    height: calc(0.15 * var(--width));
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #DDDDDD;
+    color: #000000;
+    border-radius: calc(0.005 * var(--width));
+    border: 3px solid #AAAAAA;
+    font-size: calc(0.1 * var(--width));
+}
+
+main{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor2);
+    border-radius: 50%;
+}
+
+#players{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--width);
+    height: var(--height);
+    transform: translate(-50%, -50%);
+}
+
+#players>*{
+    background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: calc(0.005 * var(--width));
+    font-size: calc(0.1 * var(--width));
+    color: #FFFFFFAA;
+}
+
+#players>*>img{
+    width: calc(0.054 * var(--width));
+    height: calc(0.096 * var(--width));
+}
+
+#cardDeck{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#cardDeckBackground{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: calc(0.3 * var(--width));
+    height: calc(0.3 * var(--height));
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor1);
+    border-radius: 50%; 
+}
+
+#cardDeck>*{
+    width: calc(0.108 * var(--width));
+    height: calc(0.192 * var(--width));
+    background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: calc(0.005 * var(--width));
+}
+
+footer{
+    position: fixed;
+    left: 50%;
+    top: calc(-0.7 * var(--height));
+    width: calc(0.7 * var(--width));
+    height: calc(0.7 * var(--height));
+    transform: translate(-50%, -50%);
+    background-color: var(--themeColor1);
+    color: #AAAAAA;
+    opacity: 0.5;
+    font-size: calc(0.05 * var(--width));
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    text-align: center;
+    border-radius: calc(0.005 * var(--width));
+}
+
+footer>*{
+    border: 1px solid #000000AA;
+}
+
+#footerToogleLabel{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: calc(0.075 * var(--width));
+    height: calc(0.075 * var(--width));
+    margin: calc(0.025 * var(--width));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(0.05 * var(--width));
+    color: #FFFFFFAA;
+    background-color: var(--themeColor2);
+    border-radius: calc(0.005 * var(--width));
+}
+
+#footerToogle:checked~footer{
+    top: 50%;
+}
+
+#reloadButton{
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: calc(0.075 * var(--width));
+    height: calc(0.075 * var(--width));
+    margin: calc(0.025 * var(--width));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(0.05 * var(--width));
+    color: #FFFFFFAA;
+    background-color: var(--themeColor2);
+    border-radius: calc(0.005 * var(--width));
+    border: none;
+}

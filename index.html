@@ -1,16 +1,68 @@
-<!-- This file is for easy redirect when the user requests the wrong page -->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>redirect</title>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+        <meta name=description content="skyjo game as Progressive Web App (PWA)">
 
-        <meta http-equiv="refresh" content="0; url=./src/index.html" />
+        <title>skyjo</title>
+
+        <link rel="manifest" href="./manifest.json">
+        <meta name="theme-color" content="#EEEEEE" />
+
+        <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+        <link href="../images/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+        <link href="../images/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+        <link href="../images/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+        <link href="../images/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+        <link href="../images/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+        <link href="../images/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+        <link href="../images/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+        <link href="../images/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+        <link href="../images/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+        <link href="../images/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+
+        <link rel="icon" href="./images/icon.svg">
+        <link rel="stylesheet" href="./style.css">
+
+        <script src="./scripts/main.js"></script>
+        <script src="./scripts/Game.js"></script>
+        <script src="./scripts/ScreenHandler.js"></script>
+        <script src="./scripts/GameRound.js"></script>
+        <script src="./scripts/Player.js"></script>
+        <script src="./scripts/Card.js"></script>
+        <script src="./scripts/CardGrid.js"></script>
+        <script src="./scripts/CardDeck.js"></script>
     </head>
-
     <body>
-        <a href="./src/index.html">Redirect</a>
+        <header>
+            <h3>Players</h3>
+            <div>
+                <button onmousedown="game.startGame(0, 2);">0</button>
+                <button onmousedown="game.startGame(1, 1);">1</button>
+                <button onmousedown="game.startGame(2, 0);">2</button>
+                <button onmousedown="game.startGame(3, 0);">3</button>
+                <button onmousedown="game.startGame(4, 0);">4</button>
+                <button onmousedown="game.startGame(5, 0);">5</button>
+                <button onmousedown="game.startGame(6, 0);">6</button>
+            </div>
+        </header>
+
+        <main>
+            <div id="players"></div>
+            <div id="cardDeckBackground"></div>
+            <div id="cardDeck">
+                <img id="newTopCard" src="./images/hidden.svg" onmousedown="game.newTopCard()" />
+                <img id="topCard" src="./images/hidden.svg" onmousedown="game.topCardClick()" />
+            </div>
+        </main>
+
+        <input id="footerToogle" type="checkbox" />
+        <label id="footerToogleLabel" for="footerToogle" onmousedown="game.nextRound();">&bigtriangledown;</label>
+        <footer></footer>
+
+        <button id="reloadButton" onclick="window.location.reload();">&circlearrowleft;</button>
     </body>
 </html>
