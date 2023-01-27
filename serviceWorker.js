@@ -2,8 +2,32 @@ let cacheName = "skyjo";
 let filesToCache = [
     "/skyjo/",
     "/skyjo/index.html",
-    "/skyjo/index.js",
-    "/skyjo/index.css"
+    "/skyjo/scripts/Card.js",
+    "/skyjo/scripts/CardDeck.js",
+    "/skyjo/scripts/CardGrid.js",
+    "/skyjo/scripts/Game.js",
+    "/skyjo/scripts/GameRound.js",
+    "/skyjo/scripts/Player.js",
+    "/skyjo/scripts/ScreenHandler.js",
+    "/skyjo/scripts/main.js",
+    "/skyjo/style.css",
+    "/skyjo/images/-2.svg",
+    "/skyjo/images/-1.svg",
+    "/skyjo/images/0.svg",
+    "/skyjo/images/1.svg",
+    "/skyjo/images/2.svg",
+    "/skyjo/images/3.svg",
+    "/skyjo/images/4.svg",
+    "/skyjo/images/5.svg",
+    "/skyjo/images/6.svg",
+    "/skyjo/images/7.svg",
+    "/skyjo/images/8.svg",
+    "/skyjo/images/9.svg",
+    "/skyjo/images/10.svg",
+    "/skyjo/images/11.svg",
+    "/skyjo/images/12.svg",
+    "/skyjo/images/NaN.svg",
+    "/skyjo/images/hidden.svg"
 ];
 
 self.addEventListener("install", (event) => {
